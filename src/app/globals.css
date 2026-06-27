@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #0D1117;
+  --color-foreground: #ffffff;
+  
+  /* Industrial Theme Colors */
+  --color-brand-neon-green: #39ff14;
+  --color-brand-electric-blue: #0ff0fc;
+  --color-brand-orange: #ff6a00;
+  --color-brand-red: #ff073a;
+  --color-brand-yellow: #facc15;
+  --color-brand-card: rgba(255, 255, 255, 0.03);
+  --color-brand-card-border: rgba(255, 255, 255, 0.1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0D1117;
+  --foreground: #ffffff;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: var(--color-brand-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-brand-card-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Neon Text Utilities */
+.neon-text-green {
+  color: var(--color-brand-neon-green);
+  text-shadow: 0 0 5px rgba(57, 255, 20, 0.5), 0 0 10px rgba(57, 255, 20, 0.3);
+}
+
+.neon-text-blue {
+  color: var(--color-brand-electric-blue);
+  text-shadow: 0 0 5px rgba(15, 240, 252, 0.5), 0 0 10px rgba(15, 240, 252, 0.3);
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D1117; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3); 
 }

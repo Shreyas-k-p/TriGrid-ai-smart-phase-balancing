@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GRIDSENSE AI SCADA Dashboard
 
-## Getting Started
+**Balancing the Grid, Empowering Renewable Energy.**
 
-First, run the development server:
+This is a modern industrial SCADA dashboard designed to monitor an ESP32-based Edge AI Smart Phase Balancing System. It connects directly via MQTT using WebSockets to provide real-time updates without any browser refreshing.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Realtime MQTT Connection**: Instantly updates via WebSockets.
+- **Edge AI Phase Balancing**: Displays the optimal phase ("R" or "B") and the rationale behind the AI's decision.
+- **Phase Monitor Gauges**: Animated circular gauges for Voltage and Current, along with Health Score bars.
+- **Live Telemetry Charts**: Real-time scrolling charts for Voltage and Current using Recharts.
+- **Relay & Load Shift Animations**: Visual Framer Motion animations when load shifting occurs between phases.
+- **Bonus Features**: CSV Export, Screenshot capture, Alarm Toasts, and Event Logs.
+- **Dark Industrial Theme**: Built with a sleek, neon-accented glassmorphism aesthetic.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS v4
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
+- **Charts**: Recharts
+- **MQTT Client**: MQTT.js
 
-## Learn More
+## Installation Guide
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone or Download the Project**:
+   Ensure you are in the `gridsense-ai` directory.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Run the Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. **Access the Dashboard**:
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## MQTT Setup & Testing Instructions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The dashboard connects to the following EMQX broker by default:
+- **Broker (WebSockets)**: `wss://y12dbb61.ala.asia-southeast1.emqxsl.com:8084/mqtt`
+- **Username**: `table_T01`
+- **Password**: `scan4serve`
+- **Topic**: `restaurant/snmimt/table/1` (and `gridsense/live`)
+
+*(Note: Browsers cannot connect directly to TCP port 8883, so Secure WebSockets on port 8084 is used).*
+
+### Testing with MQTTX
+
+To test the dashboard using MQTTX, use the following settings:
+
+1. **Create a New Connection**:
+   - **Name**: Gridsense AI Test
+   - **Client ID**: `mqttx_test_client`
+   - **Host**: `mqtts://y12dbb61.ala.asia-southeast1.emqxsl.com`
+   - **Port**: `8883`
+   - **Username**: `table_T01`
+   - **Password**: `scan4serve`
+
+2. **Publish a Test Message**:
+   - **Topic**: `gridsense/live` (or `restaurant/snmimt/table/1`)
+   - **Payload Type**: JSON
+   - **Payload**:
+     ```json
+     {
+       "time": "12:45:18",
+       "date": "26-06-2026",
+       "voltageR": 11.82,
+       "voltageB": 10.43,
+       "currentR": 1.22,
+       "currentB": 0.95,
+       "healthR": 7.92,
+       "healthB": 6.80,
+       "bestPhase": "R",
+       "led1": "R",
+       "led2": "R",
+       "relayK1": true,
+       "relayK2": false,
+       "relayK3": false,
+       "relayK4": true,
+       "systemStatus": "Running",
+       "switching": false,
+       "lastShift": "B -> R"
+     }
+     ```
+
+As soon as you hit "Publish", the Next.js dashboard will instantly react, animate the gauges, and update the live charts!
