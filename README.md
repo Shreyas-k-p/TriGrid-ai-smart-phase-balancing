@@ -43,11 +43,6 @@ This is a modern industrial SCADA dashboard designed to monitor an ESP32-based E
 
 ## MQTT Setup & Testing Instructions
 
-The dashboard connects to the following EMQX broker by default:
-- **Broker (WebSockets)**: `wss://y12dbb61.ala.asia-southeast1.emqxsl.com:8084/mqtt`
-- **Username**: `table_T01`
-- **Password**: `scan4serve`
-- **Topic**: `restaurant/snmimt/table/1` (and `gridsense/live`)
 
 *(Note: Browsers cannot connect directly to TCP port 8883, so Secure WebSockets on port 8084 is used).*
 
@@ -55,16 +50,8 @@ The dashboard connects to the following EMQX broker by default:
 
 To test the dashboard using MQTTX, use the following settings:
 
-1. **Create a New Connection**:
-   - **Name**: Gridsense AI Test
-   - **Client ID**: `mqttx_test_client`
-   - **Host**: `mqtts://y12dbb61.ala.asia-southeast1.emqxsl.com`
-   - **Port**: `8883`
-   - **Username**: `table_T01`
-   - **Password**: `scan4serve`
-
 2. **Publish a Test Message**:
-   - **Topic**: `gridsense/live` (or `restaurant/snmimt/table/1`)
+   - **Topic**:
    - **Payload Type**: JSON
    - **Payload**:
      ```json
